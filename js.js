@@ -30,7 +30,7 @@ function validate(n)
     {
         n = oddNumber(n);
     }
-    console.log(n);
+    
     return(n = checkValueBeforeSum(n) % 10 === 0) ? true : false;
 }
 
