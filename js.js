@@ -18,4 +18,4 @@ squareRootMe = function (sqrt)
     }
 };
 
-alert(squareRootMe(5477));
+alert(squareRootMe()); //<-- Add value //
