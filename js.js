@@ -1,100 +1,47 @@
-alphabetSmall = [];
-alphabetHigh = [];
-var checkSmallLetter = false;
-var checkHighLetter = false;
-
-function genCharArraySmall(charA, charZ) {
-    var a = [], i = charA.charCodeAt(0), j = charZ.charCodeAt(0);
-    for (; i <= j; i++) {
-        alphabetSmall.push(String.fromCharCode(i));
-    }
-    return a;
-}
-
-
-
-function genCharArrayHigh(charA, charZ) {
-    var a = [], i = charA.charCodeAt(0), j = charZ.charCodeAt(0);
-    for (; i <= j; i++) {
-        alphabetHigh.push(String.fromCharCode(i));
-    }
-    return a;
-}
-
-
-function findMissingLetter(array)
+function howManyPalindromes(s)
 {
+    var result = s.length;
     var k = 0;
-    var tabLetter = [];
-    if(!Array.isArray(array))
+
+
+    for(var i = 0;i<s.length;i++)
     {
-        for(var i = 0; i<arguments.length;i++)
+        if(i === s.length-1)
         {
-            tabLetter.push(arguments[i]);
-        }
-
-        array = tabLetter;
-    }
-
-    console.log(array);
-
-    genCharArrayHigh('A', 'Z');
-    genCharArraySmall('a', 'z');
-
-    for(var i = 0; i < alphabetHigh.length;i++)
-    {
-        if(array[0] === alphabetHigh[i])
-        {
-            checkHighLetter = true;
             break;
         }
-    }
 
-    for(var i = 0; i < alphabetSmall.length;i++)
-    {
-        if(array[0] === alphabetSmall[i])
+        for(var j = s.length - 1; j > i; j--)
         {
-            checkSmallLetter = true;
+          k = j;
+          if(j===i)
+          {
+              break;
+          }
+
+          for(var b = i; b <= j; b++)
+          {
+              if(s.charAt(b) === s.charAt(k))
+              {
+                  k--
+              }
+
+              else
+              {
+                  break;
+              }
+
+              if(k <= b)
+              {
+                  result += 1;
+                  break;
+              }
+
+          }
         }
     }
 
-    if(checkHighLetter)
-    {
-        for(var i = 0; i<alphabetHigh.length;i++)
-        {
-            if(array[0] === alphabetHigh[i])
-            {
-                for(var j = i; j<alphabetHigh.length;j++)
-                {
-                    if(array[k] !== alphabetHigh[j])
-                    {
-                        return alphabetHigh[j];
-                    }
-                    k++;
-                }
-            }
-        }
-    }
-
-    else
-    {
-        for(var i = 0; i<alphabetSmall.length;i++)
-        {
-            if(array[0] === alphabetSmall[i])
-            {
-                for(var j = i; j<alphabetSmall.length;j++)
-                {
-                    if(array[k] !== alphabetSmall[j])
-                    {
-                        return alphabetSmall[j];
-                    }
-                    k++;
-                }
-            }
-        }
-    }
-
-
+    console.log(result);
 }
 
-console.log(findMissingLetter('p','q','r','s','u'));
+howManyPalindromes('feetea');
