@@ -1,107 +1,100 @@
-var value = [];
+alphabetSmall = [];
+alphabetHigh = [];
+var checkSmallLetter = false;
+var checkHighLetter = false;
 
-function validate(n)
+function genCharArraySmall(charA, charZ) {
+    var a = [], i = charA.charCodeAt(0), j = charZ.charCodeAt(0);
+    for (; i <= j; i++) {
+        alphabetSmall.push(String.fromCharCode(i));
+    }
+    return a;
+}
+
+
+
+function genCharArrayHigh(charA, charZ) {
+    var a = [], i = charA.charCodeAt(0), j = charZ.charCodeAt(0);
+    for (; i <= j; i++) {
+        alphabetHigh.push(String.fromCharCode(i));
+    }
+    return a;
+}
+
+
+function findMissingLetter(array)
 {
-    if(n.length === undefined)
+    var k = 0;
+    var tabLetter = [];
+    if(!Array.isArray(array))
     {
-      n = n.toString();
+        for(var i = 0; i<arguments.length;i++)
+        {
+            tabLetter.push(arguments[i]);
+        }
 
-      for(var i = 0; i < n.length; i++)
-      {
-          value.push(n.charAt(i));
-      }
-
-      n = [];
-
-      for(var i = 0; i < value.length; i++)
-      {
-        n.push((parseInt(value[i])));
-      }
+        array = tabLetter;
     }
 
-    value = [];
+    console.log(array);
 
-    if(n.length % 2 === 0)
+    genCharArrayHigh('A', 'Z');
+    genCharArraySmall('a', 'z');
+
+    for(var i = 0; i < alphabetHigh.length;i++)
     {
-        n = evenNumber(n);
+        if(array[0] === alphabetHigh[i])
+        {
+            checkHighLetter = true;
+            break;
+        }
+    }
+
+    for(var i = 0; i < alphabetSmall.length;i++)
+    {
+        if(array[0] === alphabetSmall[i])
+        {
+            checkSmallLetter = true;
+        }
+    }
+
+    if(checkHighLetter)
+    {
+        for(var i = 0; i<alphabetHigh.length;i++)
+        {
+            if(array[0] === alphabetHigh[i])
+            {
+                for(var j = i; j<alphabetHigh.length;j++)
+                {
+                    if(array[k] !== alphabetHigh[j])
+                    {
+                        return alphabetHigh[j];
+                    }
+                    k++;
+                }
+            }
+        }
     }
 
     else
     {
-        n = oddNumber(n);
+        for(var i = 0; i<alphabetSmall.length;i++)
+        {
+            if(array[0] === alphabetSmall[i])
+            {
+                for(var j = i; j<alphabetSmall.length;j++)
+                {
+                    if(array[k] !== alphabetSmall[j])
+                    {
+                        return alphabetSmall[j];
+                    }
+                    k++;
+                }
+            }
+        }
     }
-    console.log(n);
-    return(n = checkValueBeforeSum(n) % 10 === 0) ? true : false;
+
+
 }
 
-evenNumber = function (arr)
-{
-    for(var i = 0; i < arr.length; i++)
-    {
-       if(i % 2 === 0)
-       {
-            value.push(arr[i] * 2);
-       }
-
-       else
-       {
-           value.push(arr[i]);
-       }
-    }
-
-    return value;
-};
-
-oddNumber = function (arr)
-{
-    for(var i = 0; i < arr.length; i++)
-    {
-        if(i % 2 !== 0)
-        {
-            value.push(arr[i] * 2);
-        }
-
-        else
-        {
-            value.push(arr[i]);
-        }
-    }
-
-    return value;
-};
-
-checkValueBeforeSum = function (arr)
-{
-    value = [];
-
-    for(var i = 0; i < arr.length; i++)
-    {
-        value.push(arr[i].toString());
-    }
-
-    arr = [];
-
-   for(var i = 0; i < value.length; i++)
-   {
-       if(value[i].length > 1)
-       {
-          arr.push(parseInt(value[i].charAt(0))+ parseInt(value[i].charAt(1)));
-       }
-
-       else
-       {
-           arr.push(parseInt(value[i]));
-       }
-   }
-
-   value = 0;
-
-   for (var i = 0; i< arr.length; i++)
-   {
-       value += arr[i];
-   }
-
-   return value;
-};
-
-alert(validate()); //<--- add Value //
+console.log(findMissingLetter('p','q','r','s','u'));
