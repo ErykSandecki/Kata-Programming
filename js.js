@@ -1,100 +1,89 @@
-alphabetSmall = [];
-alphabetHigh = [];
-var checkSmallLetter = false;
-var checkHighLetter = false;
-
-function genCharArraySmall(charA, charZ) {
-    var a = [], i = charA.charCodeAt(0), j = charZ.charCodeAt(0);
-    for (; i <= j; i++) {
-        alphabetSmall.push(String.fromCharCode(i));
-    }
-    return a;
-}
-
-
-
-function genCharArrayHigh(charA, charZ) {
-    var a = [], i = charA.charCodeAt(0), j = charZ.charCodeAt(0);
-    for (; i <= j; i++) {
-        alphabetHigh.push(String.fromCharCode(i));
-    }
-    return a;
-}
-
-
-function findMissingLetter(array)
+var tabAccessLetter = [];
+var tabNumber = ['ZERO','ONE','TWO','THREE','FOUR','FIVE','SIX','SEVEN','EIGHT','NINE'];
+var result=[];
+function originalNumber(s)
 {
-    var k = 0;
-    var tabLetter = [];
-    if(!Array.isArray(array))
+    for(var i = 0 ; i < s.length; i++)
     {
-        for(var i = 0; i<arguments.length;i++)
-        {
-            tabLetter.push(arguments[i]);
-        }
-
-        array = tabLetter;
+        tabAccessLetter.push(true);
     }
 
-    console.log(array);
-
-    genCharArrayHigh('A', 'Z');
-    genCharArraySmall('a', 'z');
-
-    for(var i = 0; i < alphabetHigh.length;i++)
+    while(checkBlockAllLetter())
     {
-        if(array[0] === alphabetHigh[i])
+        for(var j = 0; j<tabNumber.length;j++)
         {
-            checkHighLetter = true;
-            break;
-        }
-    }
-
-    for(var i = 0; i < alphabetSmall.length;i++)
-    {
-        if(array[0] === alphabetSmall[i])
-        {
-            checkSmallLetter = true;
-        }
-    }
-
-    if(checkHighLetter)
-    {
-        for(var i = 0; i<alphabetHigh.length;i++)
-        {
-            if(array[0] === alphabetHigh[i])
+            for(var i = 0; i < s.length;i++)
             {
-                for(var j = i; j<alphabetHigh.length;j++)
+                if(checkValueZero(s,tabNumber[j],j))
                 {
-                    if(array[k] !== alphabetHigh[j])
-                    {
-                        return alphabetHigh[j];
-                    }
-                    k++;
+                    break;
                 }
             }
         }
     }
 
-    else
-    {
-        for(var i = 0; i<alphabetSmall.length;i++)
-        {
-            if(array[0] === alphabetSmall[i])
-            {
-                for(var j = i; j<alphabetSmall.length;j++)
-                {
-                    if(array[k] !== alphabetSmall[j])
-                    {
-                        return alphabetSmall[j];
-                    }
-                    k++;
-                }
-            }
-        }
-    }
-
-
+    return result.sort();
 }
 
-console.log(findMissingLetter('p','q','r','s','u'));
+checkBlockAllLetter = function ()
+{
+  for(var i = 0; i<tabAccessLetter.length;i++)
+  {
+      if(tabAccessLetter[i])
+      {
+          return true;
+      }
+  }
+
+  return false;
+};
+
+checkValueZero = function (text, textValue,number)
+{
+    var posTab = [];
+    for(var i = 0; i<textValue.length;i++)
+    {
+        posTab.push(-1);
+    }
+
+    for(var i = 0 ; i < textValue.length; i++)
+    {
+        for(var j = 0; j < text.length;j++)
+        {
+            if((textValue.charAt(i) === text.charAt(j)) && (tabAccessLetter[j]))
+            {
+                posTab[i] = j;
+                tabAccessLetter[j] = false;
+                break;
+            }
+        }
+
+    }
+
+    for(var i = 0; i < posTab.length; i++)
+    {
+        if(posTab[i] === -1)
+        {
+            for(var j = 0; j < posTab.length;j++)
+            {
+                tabAccessLetter[posTab[j]] = true;
+            }
+
+            return  false;
+        }
+
+
+        if(i === posTab.length-1)
+        {
+            result.push(number);
+
+            return true;
+        }
+
+
+    }
+
+};
+
+console.log(originalNumber("RHIIHTOOIIZETEXGRVENOUNEEENFEOWTSREVESFN"));
+
